@@ -10,7 +10,7 @@ namespace Editor
         private readonly List<AnimationClip> _clipsToMerge = new List<AnimationClip>();
         private string _savePath = "Assets/";
 
-        [MenuItem("Escripts/EClip Merger")]
+        [MenuItem("Escripts/EClips Merger")]
         public static void ShowWindow()
         {
             GetWindow<EClipsMerger>("EClips Merger");
@@ -107,7 +107,7 @@ namespace Editor
             {
                 if (_clipsToMerge.Count > 0 && !string.IsNullOrEmpty(_savePath))
                 {
-                    EClipMergerUtility.MergeClips(_clipsToMerge, _savePath);
+                    EClipsMergerUtility.MergeClips(_clipsToMerge, _savePath);
                 }
                 else
                 {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Editor
 {
-    public static class EClipMergerUtility
+    public static class EClipsMergerUtility
     {
         public static AnimationClip MergeClips(List<AnimationClip> clipsToMerge, string savePath)
         {
