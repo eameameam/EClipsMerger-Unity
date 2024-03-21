@@ -9,7 +9,8 @@ namespace Editor
     {
         private readonly List<AnimationClip> _clipsToMerge = new List<AnimationClip>();
         private string _savePath = "Assets/";
-
+        private string _mergedClipName = "MergedClip";
+        
         [MenuItem("Escripts/EClips Merger")]
         public static void ShowWindow()
         {
@@ -38,7 +39,12 @@ namespace Editor
             EditorGUILayout.EndHorizontal();
 
             GUILayout.Space(10);
-
+            
+            GUILayout.Label("Merged Clip Name", EditorStyles.boldLabel);
+            _mergedClipName = EditorGUILayout.TextField(_mergedClipName);
+            
+            GUILayout.Space(10);
+            
             EditorGUILayout.BeginHorizontal();
         
             EditorGUILayout.BeginVertical();
@@ -107,7 +113,7 @@ namespace Editor
             {
                 if (_clipsToMerge.Count > 0 && !string.IsNullOrEmpty(_savePath))
                 {
-                    EClipsMergerUtility.MergeClips(_clipsToMerge, _savePath);
+                    EClipsMergerUtility.MergeClips(_clipsToMerge, _savePath, _mergedClipName);
                 }
                 else
                 {

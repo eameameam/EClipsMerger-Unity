@@ -6,7 +6,7 @@ namespace Editor
 {
     public static class EClipsMergerUtility
     {
-        public static AnimationClip MergeClips(List<AnimationClip> clipsToMerge, string savePath)
+        public static AnimationClip MergeClips(List<AnimationClip> clipsToMerge, string savePath, string mergedClipName)
         {
             if (clipsToMerge == null || clipsToMerge.Count == 0)
             {
@@ -37,7 +37,7 @@ namespace Editor
                     mergedClip.AddEvent(evt);
                 }
             }
-            string fullPath = AssetDatabase.GenerateUniqueAssetPath(savePath + "/MergedClip.anim");
+            string fullPath = AssetDatabase.GenerateUniqueAssetPath($"{savePath}/{mergedClipName}.anim");
             AssetDatabase.CreateAsset(mergedClip, fullPath);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
