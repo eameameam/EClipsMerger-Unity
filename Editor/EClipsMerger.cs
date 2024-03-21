@@ -10,7 +10,8 @@ namespace Editor
         private readonly List<AnimationClip> _clipsToMerge = new List<AnimationClip>();
         private string _savePath = "Assets/";
         private string _mergedClipName = "MergedClip";
-        
+        private int _priorityClipIndex = 0;
+
         [MenuItem("Escripts/EClips Merger")]
         public static void ShowWindow()
         {
@@ -45,6 +46,15 @@ namespace Editor
             
             GUILayout.Space(10);
             
+            if (_clipsToMerge.Count > 0)
+            {
+                GUILayout.Space(10);
+                GUILayout.Label("Priority Animation Clip", EditorStyles.boldLabel);
+                _priorityClipIndex = EditorGUILayout.Popup("Select Priority Clip", _priorityClipIndex, _clipsToMerge.ConvertAll(c => c != null ? c.name : "NULL").ToArray());
+            }
+
+            GUILayout.Space(10);
+
             EditorGUILayout.BeginHorizontal();
         
             EditorGUILayout.BeginVertical();
@@ -113,7 +123,7 @@ namespace Editor
             {
                 if (_clipsToMerge.Count > 0 && !string.IsNullOrEmpty(_savePath))
                 {
-                    EClipsMergerUtility.MergeClips(_clipsToMerge, _savePath, _mergedClipName);
+                    EClipsMergerUtility.MergeClips(_clipsToMerge, _savePath, _mergedClipName, _priorityClipIndex);
                 }
                 else
                 {

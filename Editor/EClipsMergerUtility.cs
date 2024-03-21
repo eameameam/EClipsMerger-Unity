@@ -6,7 +6,7 @@ namespace Editor
 {
     public static class EClipsMergerUtility
     {
-        public static AnimationClip MergeClips(List<AnimationClip> clipsToMerge, string savePath, string mergedClipName)
+        public static AnimationClip MergeClips(List<AnimationClip> clipsToMerge, string savePath, string mergedClipName, int priorityClipIndex)
         {
             if (clipsToMerge == null || clipsToMerge.Count == 0)
             {
@@ -15,8 +15,14 @@ namespace Editor
             }
 
             AnimationClip mergedClip = new AnimationClip();
-
             HashSet<string> addedProperties = new HashSet<string>();
+
+            if (priorityClipIndex >= 0 && priorityClipIndex < clipsToMerge.Count)
+            {
+                var priorityClip = clipsToMerge[priorityClipIndex];
+                clipsToMerge.RemoveAt(priorityClipIndex);
+                clipsToMerge.Insert(0, priorityClip);
+            }
 
             foreach (AnimationClip clip in clipsToMerge)
             {
@@ -31,12 +37,14 @@ namespace Editor
                         addedProperties.Add(binding.path + binding.propertyName);
                     }
                 }
+
                 AnimationEvent[] events = AnimationUtility.GetAnimationEvents(clip);
                 foreach (var evt in events)
                 {
                     mergedClip.AddEvent(evt);
                 }
             }
+
             string fullPath = AssetDatabase.GenerateUniqueAssetPath($"{savePath}/{mergedClipName}.anim");
             AssetDatabase.CreateAsset(mergedClip, fullPath);
             AssetDatabase.SaveAssets();
